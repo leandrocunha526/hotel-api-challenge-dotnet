@@ -1,0 +1,8 @@
+bin
+obj
+Migrations
+.vs
+Test.db
+Migrations.Sqlite
+Test.db-shm
+Test.db-wal
