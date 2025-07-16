@@ -14,7 +14,9 @@ O objetivo é gerenciar o processo de hospedagem em um hotel, permitindo o contr
 ✅ Cadastro de reservas (Reserva), associando hóspedes a uma suíte  
 ✅ Cálculo do valor total da reserva com desconto automático de 10% para estadias iguais ou superiores a 10 dias  
 ✅ Validação para impedir reservas com número de hóspedes superior à capacidade da suíte  
-✅ Persistência completa dos dados no SQL Server via Entity Framework Core
+✅ Persistência completa dos dados no SQL Server via Entity Framework Core  
+✅ Informa na rota de suítes quando há reserva nos dias atuais usando inner join do SQL  
+✅ Adiciona ambientes isolados de teste e desenvolvimento para seguir boas práticas de ambientes com mais 1 alternativa de banco de dados  
 
 ---
 
