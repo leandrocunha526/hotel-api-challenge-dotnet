@@ -8,7 +8,7 @@ DBCC CHECKIDENT ('Persons', RESEED, 0);
 DBCC CHECKIDENT ('Suites', RESEED, 0);
 
 -- 2. Inserir 50 Suites com CreatedAt e UpdatedAt
-INSERT INTO Suites (Tipo, Capacidade, PriceByDay, CreatedAt, UpdatedAt)
+INSERT INTO Suites (Type, Capacidade, PriceByDay, CreatedAt, UpdatedAt)
 VALUES
 ('Standard', 2, 150.00, GETDATE(), GETDATE()),
 ('Deluxe', 4, 300.00, GETDATE(), GETDATE()),
@@ -115,7 +115,7 @@ VALUES
 ('Pessoa 49', 'pessoa49@email.com', '1998-01-18', '11990000049', GETDATE(), GETDATE()),
 ('Pessoa 50', 'pessoa50@email.com', '1999-02-19', '11990000050', GETDATE(), GETDATE());
 
--- 4. Inserir 50 Reservas, usando PersonId e SuiteId (calculando TotalPrice = PriceByDay * número de dias, aqui fixo em 5 dias para o exemplo)
+-- 4. Inserir 50 Reservas, usando PersonId e SuiteId (calculando TotalPrice = PriceByDay * nÃºmero de dias, aqui fixo em 5 dias para o exemplo)
 
 INSERT INTO Reservations (SuiteId, PersonId, CheckInDate, CheckOutDate, TotalPrice, CreatedAt, UpdatedAt)
 VALUES

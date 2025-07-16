@@ -9,7 +9,7 @@ namespace hotel_api_challenge.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "O tipo da suíte é obrigatório.")]
-        public required string Tipo { get; set; }
+        public required string Type { get; set; }
 
         [Required(ErrorMessage = "A capacidade da suíte é obrigatória.")]
         [Range(1, int.MaxValue, ErrorMessage = "A capacidade deve ser pelo menos 1.")]

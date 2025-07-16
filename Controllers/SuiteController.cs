@@ -43,7 +43,7 @@ namespace hotel_api_challenge.Controllers
         {
             if (id != suite.Id)
             {
-                return BadRequest("O ID da URL é diferente do ID do corpo da requisição.");
+                return BadRequest("O ID da URL Ã© diferente do ID do corpo da requisiÃ§Ã£o.");
             }
 
             if (!ModelState.IsValid)
@@ -57,7 +57,7 @@ namespace hotel_api_challenge.Controllers
                 return NotFound();
             }
 
-            existingSuite.Tipo = suite.Tipo;
+            existingSuite.Type = suite.Type;
             existingSuite.Capacidade = suite.Capacidade;
             existingSuite.PriceByDay = suite.PriceByDay;
 

@@ -52,7 +52,7 @@ namespace hotel_api_challenge.Data
         public async Task<Suite[]> GetAllSuitesAsync()
         {
             return await _context.Suites
-                .OrderBy(s => s.Tipo)
+                .OrderBy(s => s.Type)
                 .Include(r => r.Reservations)
                 .ToArrayAsync();
         }
@@ -81,23 +81,25 @@ namespace hotel_api_challenge.Data
                 .FirstOrDefaultAsync(r => r.Id == id);
         }
 
-        // MÉTODOS PARA SUITES COM RESERVAS VIGENTES
+        // MÃ‰TODOS PARA SUITES COM RESERVAS VIGENTES
         public async Task<object[]> GetAllSuitesWithCurrentReservationsAsync()
         {
             var today = DateTime.Today;
 
             return await _context.Suites
-                .OrderBy(s => s.Tipo)
-                .Select(s => new {
+                .OrderBy(s => s.Type)
+                .Select(s => new
+                {
                     s.Id,
-                    s.Tipo,
+                    s.Type,
                     s.Capacidade,
                     s.PriceByDay,
                     s.CreatedAt,
                     s.UpdatedAt,
                     Reservations = s.Reservations
                         .Where(r => r.CheckInDate <= today && r.CheckOutDate >= today)
-                        .Select(r => new {
+                        .Select(r => new
+                        {
                             r.Id,
                             r.CheckInDate,
                             r.CheckOutDate,
@@ -118,16 +120,18 @@ namespace hotel_api_challenge.Data
 
             return await _context.Suites
                 .Where(s => s.Id == id)
-                .Select(s => new {
+                .Select(s => new
+                {
                     s.Id,
-                    s.Tipo,
+                    s.Type,
                     s.Capacidade,
                     s.PriceByDay,
                     s.CreatedAt,
                     s.UpdatedAt,
                     Reservations = s.Reservations
                         .Where(r => r.CheckInDate <= today && r.CheckOutDate >= today)
-                        .Select(r => new {
+                        .Select(r => new
+                        {
                             r.Id,
                             r.CheckInDate,
                             r.CheckOutDate,

@@ -6,8 +6,17 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
-builder.Services.AddDbContext<DataContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseConnection")));
+// Test environment using sqlite
+if (builder.Environment.IsEnvironment("Test"))
+{
+    builder.Services.AddDbContext<DataContext>(options =>
+        options.UseSqlite("Data Source=Test.db"));
+}
+else
+{
+    builder.Services.AddDbContext<DataContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseConnection")));
+}
 
 builder.Services.AddScoped<IRepository, Repository>();
 

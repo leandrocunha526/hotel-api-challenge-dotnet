@@ -36,6 +36,7 @@ O objetivo é gerenciar o processo de hospedagem em um hotel, permitindo o contr
 - [SQL Server](https://www.microsoft.com/sql-server)  
 - Swagger (para testes dos endpoints REST)  
 - C#
+- SQLite
 
 ---
 
@@ -53,6 +54,12 @@ Depois, atualize o banco de dados com as migrations criadas:
 
 ```bash
 dotnet ef database update
+```
+
+Para usar o ambiente de teste:
+
+```bash
+export ASPNETCORE_ENVIRONMENT=Test
 ```
 
 Uso de gerador de código via aspnet-codegenerator ou via VS IDE, exemplo:

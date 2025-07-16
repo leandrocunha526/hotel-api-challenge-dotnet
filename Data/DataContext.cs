@@ -45,6 +45,11 @@ namespace hotel_api_challenge.Data
             modelBuilder.Entity<Person>()
                 .HasIndex(p => p.Phone)
                 .IsUnique();
+
+            modelBuilder.Entity<Suite>()
+                .Property(s => s.Type)
+                .HasColumnType("TEXT");
+
         }
     }
 }
