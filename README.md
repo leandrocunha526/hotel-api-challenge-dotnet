@@ -2,6 +2,8 @@
 
 ## 📚 Descrição do projeto
 
+**ATENÇÃO: Este projeto é um projeto de estudo e o conteúdo pode ser modificado seguindo boas práticas de desenvolvimento (não está pronto).**
+
 Este é um projeto de **API RESTful**, desenvolvido em **ASP.NET Core 9**, utilizando **Entity Framework Core 9** com persistência no **SQL Server**.  
 O objetivo é gerenciar o processo de hospedagem em um hotel, permitindo o controle de hóspedes, suítes e reservas.
 
@@ -98,5 +100,6 @@ WHERE
 
 ## TODO
 
-- [ ] Adicionar autenticação (ROLES: ADMIN/CLIENTE)
-- [ ] Adicionar testes automatizados
+- [ ] Adicionar autenticação (ROLES: ADMIN/CLIENTE) (PENDENTE)
+- [ ] Adicionar testes automatizados (PENDENTE)
+- [ ] Ajustes nas regras de negócio que estão presentes no controller que deverão ser refatoradas (isso pode atrapalhar testes automatizados e a forma que foi implementado seria para testes manuais) seguindo questão de SRP e deve conter as regras em um service (PENDENTE)
