@@ -46,10 +46,18 @@ namespace hotel_api_challenge.Data
                 .HasIndex(p => p.Phone)
                 .IsUnique();
 
-            modelBuilder.Entity<Suite>()
-                .Property(s => s.Type)
-                .HasColumnType("TEXT");
-
+            if (Database.ProviderName!.Contains("SqlServer"))
+            {
+                modelBuilder.Entity<Suite>()
+                    .Property(s => s.Type)
+                    .HasColumnType("NVARCHAR(MAX)");
+            }
+            else if (Database.ProviderName.Contains("Sqlite"))
+            {
+                modelBuilder.Entity<Suite>()
+                    .Property(s => s.Type)
+                    .HasColumnType("TEXT");
+            }
         }
     }
 }
