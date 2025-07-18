@@ -99,6 +99,109 @@ WHERE
 ORDER BY r.SuiteId ASC
 ```
 
+Para cálculo usando o banco de dados:
+
+Usando functions:
+
+```sql
+CREATE FUNCTION dbo.CalcularTotalComDesconto
+(
+    @CheckIn DATE,
+    @CheckOut DATE,
+    @PrecoPorDia DECIMAL(10, 2)
+)
+RETURNS DECIMAL(10, 2)
+AS
+BEGIN
+    DECLARE @Dias INT = DATEDIFF(DAY, @CheckIn, @CheckOut)
+    DECLARE @TotalPrice DECIMAL(10, 2)
+
+    IF @Dias >= 10
+        SET @TotalPrice = @Dias * @PrecoPorDia * 0.9
+    ELSE
+        SET @TotalPrice = @Dias * @PrecoPorDia
+
+    RETURN @TotalPrice
+END
+```
+
+Pode usar com o exemplo: `SELECT dbo.CalcularTotalComDesconto('2025-08-01', '2025-08-11', 150.00) AS TotalComDesconto` ou:
+
+```sql
+DECLARE @CheckIn DATE = '2025-08-01';
+DECLARE @CheckOut DATE = '2025-08-12';
+DECLARE @PrecoPorDia DECIMAL(10,2) = 150.00;
+
+SELECT dbo.CalcularTotalComDesconto(@CheckIn, @CheckOut, @PrecoPorDia) AS TotalComDesconto;
+```
+
+Perfeito para simulações.
+
+Para obter com as informações salvas em banco de dados, use:
+
+```sql
+SELECT 
+    r.Id AS ReservationId,
+    r.PersonId,
+    r.SuiteId,
+    r.CheckInDate,
+    r.CheckOutDate,
+    s.PriceByDay,
+    DATEDIFF(DAY, r.CheckInDate, r.CheckOutDate) AS Dias,
+    dbo.CalcularTotalComDesconto(r.CheckInDate, r.CheckOutDate, s.PriceByDay) AS TotalCalculado,
+    CASE 
+        WHEN DATEDIFF(DAY, r.CheckInDate, r.CheckOutDate) >= 10 THEN 'Desconto aplicado'
+        ELSE 'Sem desconto'
+    END AS Observacao
+FROM Reservations r
+JOIN Suites s ON r.SuiteId = s.Id
+WHERE DATEDIFF(DAY, r.CheckInDate, r.CheckOutDate) >= 10;
+```
+
+Usando Trigger:
+
+```sql
+CREATE TRIGGER trg_InserirReservaComDesconto
+ON Reservations
+INSTEAD OF INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO Reservations (PersonId, SuiteId, CheckInDate, CheckOutDate, CreatedAt, UpdatedAt, TotalPrice)
+    SELECT 
+        i.PersonId,
+        i.SuiteId,
+        i.CheckInDate,
+        i.CheckOutDate,
+        i.CreatedAt,
+        i.UpdatedAt,
+        CASE 
+            WHEN DATEDIFF(DAY, i.CheckInDate, i.CheckOutDate) >= 10
+                THEN DATEDIFF(DAY, i.CheckInDate, i.CheckOutDate) * s.PriceByDay * 0.9
+            ELSE DATEDIFF(DAY, i.CheckInDate, i.CheckOutDate) * s.PriceByDay
+        END AS TotalPrice
+    FROM inserted i
+    JOIN Suites s ON s.Id = i.SuiteId;
+END
+```
+
+Ao fornecer o comando:
+
+```sql
+select * from Reservations
+```
+
+Deve exibir o campo "TotalPrice" já calculado após inserts.
+
+**Atenção**:
+
+- Use a trigger apenas para cenários onde você controla totalmente a inserção, como ambientes internos ou testes manuais.
+
+- **NOTE**: se sua API já estiver tratando o campo TotalPrice, desative a trigger ou use uma abordagem com AFTER INSERT e atualize o campo.
+
+- Teste bem antes de usar em produção.
+
 ## TODO
 
 - [ ] Adicionar autenticação (ROLES: ADMIN/CLIENTE) (PENDENTE)
