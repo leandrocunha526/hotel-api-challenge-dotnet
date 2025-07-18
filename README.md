@@ -96,6 +96,7 @@ INNER JOIN
 WHERE
     r.CheckInDate <= GETDATE()
     AND r.CheckOutDate >= GETDATE()
+ORDER BY r.SuiteId ASC
 ```
 
 ## TODO
