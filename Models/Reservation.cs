@@ -27,7 +27,7 @@ namespace hotel_api_challenge.Models
 
         [NotMapped]
         [Column(TypeName = "decimal(18,2)")]
-        public decimal Discount { get; set; } = 10m;
+        public decimal DiscountPercentage { get; set; } = 10m;
 
         [NotMapped]
         [Column(TypeName = "decimal(18,2)")]
@@ -43,7 +43,7 @@ namespace hotel_api_challenge.Models
                 // Aplica desconto se a reserva for de 10 dias ou mais
                 if (days >= 10)
                 {
-                    var discountFactor = (100 - Discount) / 100;
+                    var discountFactor = (100 - DiscountPercentage) / 100;
                     total *= discountFactor;
                 }
 

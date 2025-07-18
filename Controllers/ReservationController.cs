@@ -63,7 +63,7 @@ namespace hotel_api_challenge.Controllers
             existingReservation.SuiteId = reservation.SuiteId;
             existingReservation.CheckInDate = reservation.CheckInDate;
             existingReservation.CheckOutDate = reservation.CheckOutDate;
-            existingReservation.Discount = reservation.Discount;
+            existingReservation.DiscountPercentage = reservation.DiscountPercentage;
 
             // Calcula novamente o preço total
             existingReservation.TotalPrice = CalculateTotalPrice(existingReservation);
@@ -120,7 +120,7 @@ namespace hotel_api_challenge.Controllers
             {
                 var suite = _context.Suites.Find(reservation.SuiteId);
                 if (suite == null) return 0;
-                return CalculateTotalPrice(days, suite.PriceByDay, reservation.Discount);
+                return CalculateTotalPrice(days, suite.PriceByDay, reservation.DiscountPercentage);
             }
             else
             {
@@ -130,7 +130,7 @@ namespace hotel_api_challenge.Controllers
                 }
                 if (reservation.Suite == null) return 0;
 
-                return CalculateTotalPrice(days, reservation.Suite.PriceByDay, reservation.Discount);
+                return CalculateTotalPrice(days, reservation.Suite.PriceByDay, reservation.DiscountPercentage);
             }
         }
 
